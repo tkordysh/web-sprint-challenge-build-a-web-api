@@ -43,29 +43,31 @@ router.put("/:id", md.checkProjectId, md.checkProjectUpdatePayload, async (req, 
   }
 });
 
-// //DELETE
-// router.delete("/:id", async (req, res, next) => {
-//   try {
-//     console.log("delete project");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//DELETE
+router.delete("/:id", md.checkProjectId, async (req, res, next) => {
+  try {
+    await Project.remove(req.params.id)
+    res.json(req.project)
+  } catch (err) {
+    next(err);
+  }
+});
 
-// //GET BY ID AND ACTION
-// router.get("/", async (req, res, next) => {
-//   try {
-//     console.log("get by id and action");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//GET BY ID AND ACTION
+router.get("/:id/actions", md.checkProjectId, async (req, res, next) => {
+  try {
+    const actions = await Project.getProjectActions(req.params.id);
+    res.json(actions);
+  } catch (err) {
+    next(err);
+  }
+});
 
-// //Error handling
-// router.use((err, req, res, next) => {
-//   res.status(err.status || 500).json({
-//     message: err.message,
-//   });
-// });
+//Error handling
+router.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    message: err.message,
+  });
+});
 
 module.exports = router;
