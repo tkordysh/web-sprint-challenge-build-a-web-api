@@ -1,6 +1,6 @@
 // add middlewares here related to projects
 const Project = require("./projects-model");
-const db = require("../../data/dbConfig");
+
 
 exports.checkProjectPayload = (req, res, next) => {
   const error = { status: 400 };
