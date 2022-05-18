@@ -3,11 +3,11 @@ const Action = require("./actions-model");
 
 
 
-exports.checkProjectPayload = (req, res, next) => {
+exports.checkActionPayload = (req, res, next) => {
     const error = { status: 400 };
-    const { name, description } = req.body;
-    if (typeof name !== "string" || typeof description !== "string") {
-      error.message = "name and description are required";
+    const { project_id, description, notes } = req.body;
+    if (!project_id || !description || !notes) {
+      error.message = "id, notes, and description are required";
     }
     if (error.message) {
       next(error);
@@ -16,13 +16,11 @@ exports.checkProjectPayload = (req, res, next) => {
     }
   };
   
-  exports.checkProjectUpdatePayload = (req, res, next) => {
+  exports.checkActionUpdatePayload = (req, res, next) => {
       const error = { status: 400 };
-      const { name, description, completed } = req.body;
-      if (typeof name !== "string" || typeof description !== "string") {
-        error.message = "name and description are required";
-      } else if (completed === undefined) {
-        error.message = "completion is required"
+      const { project_id, notes, description, completed } = req.body;
+      if (!project_id || !description || !notes || !completed) {
+        error.message = "id, notes, and description, and completion are required";
       }
       if (error.message) {
         next(error);
