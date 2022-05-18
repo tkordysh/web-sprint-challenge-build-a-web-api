@@ -23,14 +23,15 @@ router.get("/:id", md.checkProjectId, async (req, res, next) => {
   }
 });
 
-// //POST
-// router.post("/", async (req, res, next) => {
-//   try {
-//     console.log("post project");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//POST
+router.post("/", md.checkProjectPayload, async (req, res, next) => {
+  try {
+    const newProject = await Project.insert(req.body);
+    res.json(newProject)
+  } catch (err) {
+    next(err);
+  }
+});
 
 // //PUT
 // router.put("/:id", async (req, res, next) => {
