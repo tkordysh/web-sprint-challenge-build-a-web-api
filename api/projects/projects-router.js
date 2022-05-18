@@ -33,14 +33,15 @@ router.post("/", md.checkProjectPayload, async (req, res, next) => {
   }
 });
 
-// //PUT
-// router.put("/:id", async (req, res, next) => {
-//   try {
-//     console.log("update project");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//PUT
+router.put("/:id", md.checkProjectId, md.checkProjectUpdatePayload, async (req, res, next) => {
+  try {
+    const updated = await Project.update(req.params.id, req.body);
+    res.json(updated)
+  } catch (err) {
+    next(err);
+  }
+});
 
 // //DELETE
 // router.delete("/:id", async (req, res, next) => {
